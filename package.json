@@ -1,0 +1,22 @@
+{
+  "name": "ai-resume-portfolio-builder",
+  "version": "1.0.0",
+  "description": "Production-ready AI Resume & Portfolio Builder with React, Express, Supabase, and Google Gemini AI",
+  "main": "backend/server.js",
+  "scripts": {
+    "setup": "npm run setup:backend && npm run setup:frontend",
+    "setup:backend": "cd backend && npm install",
+    "setup:frontend": "cd frontend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && npm start"
+  },
+  "keywords": ["resume-builder", "portfolio-generator", "ai-resume", "gemini-ai", "supabase", "react", "vite"],
+  "author": "Antigravity AI",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

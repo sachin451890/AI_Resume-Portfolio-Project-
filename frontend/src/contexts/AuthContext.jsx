@@ -1,0 +1,134 @@
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase, isSupabaseConfigured } from '../services/supabase';
+
+const AuthContext = createContext(null);
+
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Initialize session
+  useEffect(() => {
+    if (isSupabaseConfigured && supabase) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+      });
+
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+      });
+
+      return () => subscription.unsubscribe();
+    } else {
+      // Local fallback mode: check localStorage for saved user
+      const savedUser = localStorage.getItem('ai_resume_user');
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
+      } else {
+        // Unauthenticated guest user
+        setUser(null);
+      }
+      setLoading(false);
+    }
+  }, []);
+
+  const getToken = async () => {
+    if (isSupabaseConfigured && supabase) {
+      const { data: { session } } = await supabase.auth.getSession();
+      return session?.access_token || 'demo-token';
+    } else {
+      return 'demo-token';
+    }
+  };
+
+  const login = async (email, password) => {
+    if (isSupabaseConfigured && supabase) {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      return data;
+    } else {
+      const mockUser = {
+        id: `user_${Date.now()}`,
+        email,
+        user_metadata: { full_name: email.split('@')[0] || 'User' }
+      };
+      setUser(mockUser);
+      localStorage.setItem('ai_resume_user', JSON.stringify(mockUser));
+      return { user: mockUser };
+    }
+  };
+
+  const register = async (email, password, fullName) => {
+    if (isSupabaseConfigured && supabase) {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { full_name: fullName } }
+      });
+      if (error) throw error;
+      return data;
+    } else {
+      const mockUser = {
+        id: `user_${Date.now()}`,
+        email,
+        user_metadata: { full_name: fullName }
+      };
+      setUser(mockUser);
+      localStorage.setItem('ai_resume_user', JSON.stringify(mockUser));
+      return { user: mockUser };
+    }
+  };
+
+  const loginWithGoogle = async () => {
+    if (isSupabaseConfigured && supabase) {
+      const { data, error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
+      if (error) throw error;
+      return data;
+    } else {
+      const mockUser = {
+        id: `google_user_${Date.now()}`,
+        email: 'google.user@example.com',
+        user_metadata: { full_name: 'Google User' }
+      };
+      setUser(mockUser);
+      localStorage.setItem('ai_resume_user', JSON.stringify(mockUser));
+      return { user: mockUser };
+    }
+  };
+
+  const logout = async () => {
+    if (isSupabaseConfigured && supabase) {
+      await supabase.auth.signOut();
+    } else {
+      localStorage.removeItem('ai_resume_user');
+      setUser(null);
+    }
+  };
+
+  const resetPassword = async (email) => {
+    if (isSupabaseConfigured && supabase) {
+      const { error } = await supabase.auth.resetPasswordForEmail(email);
+      if (error) throw error;
+    }
+    return true;
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, session, loading, login, register, loginWithGoogle, logout, resetPassword, getToken }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
+  return context;
+}
