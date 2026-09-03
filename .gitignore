@@ -1,19 +1,17 @@
 # Dependencies
-node_modules/
-backend/node_modules/
-frontend/node_modules/
+node_modules
+**/node_modules
 
-# Environment files (sensitive credentials)
+# Environment files
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*.local
 backend/.env
 frontend/.env
 
 # Build outputs
-frontend/dist/
+dist
+**/dist
 frontend/dist-ssr/
 *.tsbuildinfo
 
