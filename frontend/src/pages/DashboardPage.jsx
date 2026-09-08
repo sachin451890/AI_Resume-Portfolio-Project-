@@ -103,10 +103,7 @@ export default function DashboardPage() {
               <PlusCircle className="w-4 h-4" /> Create Resume
             </button>
             <button
-              onClick={() => {
-                addToast('My Portfolio is a Pro feature. Please select a subscription plan.', 'info');
-                navigate('/#pricing');
-              }}
+              onClick={() => navigate('/portfolio-builder')}
               className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition"
             >
               <Globe className="w-4 h-4 text-emerald-400" /> My Portfolio
@@ -215,10 +212,7 @@ export default function DashboardPage() {
                 </button>
 
                 <button
-                  onClick={() => {
-                    addToast('My Portfolio is a Pro feature. Please select a subscription plan.', 'info');
-                    navigate('/#pricing');
-                  }}
+                  onClick={() => navigate('/portfolio-builder')}
                   className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 text-left space-y-2 transition group block w-full"
                 >
                   <Globe className="w-6 h-6 text-emerald-400 group-hover:scale-110 transition-transform" />
