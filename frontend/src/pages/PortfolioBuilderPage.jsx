@@ -10,6 +10,7 @@ import PortfolioThemeRenderer from '../components/portfolio/PortfolioThemes';
 import { useToast } from '../contexts/ToastContext';
 import { useAuth } from '../contexts/AuthContext';
 import TestPaymentModal from '../components/billing/TestPaymentModal';
+import AuthRequiredModal from '../components/auth/AuthRequiredModal';
 
 export default function PortfolioBuilderPage() {
   const { activeResume } = useResume();
@@ -17,9 +18,10 @@ export default function PortfolioBuilderPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Subscription state (defaults to false to show subscription page view, unlocked upon subscribing)
+  // Subscription state (defaults to false - user CANNOT build portfolio without subscribing)
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState('monthly'); // 'monthly' | 'yearly'
 
   const [username, setUsername] = useState('alexjohnson');
@@ -36,12 +38,21 @@ export default function PortfolioBuilderPage() {
   };
 
   const handleOpenPaymentModal = () => {
+    if (!user) {
+      addToast('Please log in or create an account to unlock your portfolio subscription.', 'info');
+      setAuthModalOpen(true);
+      return;
+    }
+    setIsPaymentModalOpen(true);
+  };
+
+  const handleAuthSuccess = () => {
     setIsPaymentModalOpen(true);
   };
 
   const handleSimulatePaymentSuccess = async (details) => {
     setIsSubscribed(true);
-    addToast('🎉 Pro Subscription activated successfully! Your Portfolio is now unlocked.', 'success');
+    addToast('🎉 Pro Subscription activated successfully! Your Portfolio Builder is now fully unlocked.', 'success');
   };
 
   const mockOrderData = {
@@ -157,19 +168,13 @@ export default function PortfolioBuilderPage() {
             </div>
 
             {/* Action Subscription Call to Action */}
-            <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="pt-6 flex justify-center">
               <button
                 onClick={handleOpenPaymentModal}
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-extrabold text-sm shadow-xl shadow-blue-500/25 flex items-center justify-center gap-2.5 transition transform hover:-translate-y-0.5"
+                className="w-full sm:w-auto px-10 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-blue-500/25 flex items-center justify-center gap-3 transition transform hover:-translate-y-0.5"
               >
                 <Zap className="w-5 h-5 text-yellow-300 fill-current" />
                 <span>Subscribe Now to Unlock Portfolio (₹799 / $9)</span>
-              </button>
-              <button
-                onClick={() => setIsSubscribed(true)}
-                className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 font-semibold text-xs transition"
-              >
-                Preview Live Portfolio Demo
               </button>
             </div>
             <p className="text-[11px] text-slate-500 flex items-center justify-center gap-1.5">
@@ -412,6 +417,13 @@ export default function PortfolioBuilderPage() {
         onClose={() => setIsPaymentModalOpen(false)}
         orderData={mockOrderData}
         onSimulateSuccess={handleSimulatePaymentSuccess}
+      />
+
+      {/* Auth Modal Integration for Unauthenticated Users */}
+      <AuthRequiredModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        onSuccess={handleAuthSuccess}
       />
     </div>
   );
