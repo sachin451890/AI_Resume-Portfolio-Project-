@@ -86,14 +86,26 @@ export function AuthProvider({ children }) {
 
   const loginWithGoogle = async () => {
     if (isSupabaseConfigured && supabase) {
-      const { data, error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/builder`
+        }
+      });
       if (error) throw error;
       return data;
     } else {
+      // Local dev mode fallback for Google Sign-In with Gmail
+      const promptEmail = window.prompt("Enter your Gmail address to log in with Google:", "user@gmail.com");
+      const userEmail = (promptEmail && promptEmail.trim()) ? promptEmail.trim() : "user@gmail.com";
+      const userName = userEmail.split('@')[0] || 'Google User';
       const mockUser = {
         id: `google_user_${Date.now()}`,
-        email: 'google.user@example.com',
-        user_metadata: { full_name: 'Google User' }
+        email: userEmail,
+        user_metadata: {
+          full_name: userName.charAt(0).toUpperCase() + userName.slice(1),
+          avatar_url: `https://api.dicebear.com/7.x/avataaars/svg?seed=${userName}`
+        }
       };
       setUser(mockUser);
       localStorage.setItem('ai_resume_user', JSON.stringify(mockUser));
