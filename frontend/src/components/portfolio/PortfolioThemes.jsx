@@ -380,18 +380,54 @@ export default function PortfolioThemeRenderer({
         </section>
       )}
 
-      {/* Contact Form Section */}
+      {/* Contact & Hire Inquiry Section */}
       <section id="contact" className={`py-20 px-6 ${isDark ? 'bg-slate-950' : 'bg-white'} border-t border-slate-800`}>
-        <div className="max-w-3xl mx-auto space-y-8 text-center">
+        <div className="max-w-4xl mx-auto space-y-10 text-center">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Get In Touch / Hire Inquiry</h2>
-            <p className="text-slate-400 text-xs">Have a project or opportunity? Send a direct message!</p>
+            <p className="text-slate-400 text-xs sm:text-sm max-w-lg mx-auto">
+              Have a project, freelance opportunity, or full-time position? Reach out directly via the form below or connect through social channels.
+            </p>
+          </div>
+
+          {/* Quick Contact & Hire Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+            {info.email && (
+              <a 
+                href={`mailto:${info.email}`}
+                className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 space-y-2 transition block group"
+              >
+                <Mail className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
+                <h4 className="font-bold text-white text-xs">Direct Email Inquiry</h4>
+                <p className="text-[11px] text-slate-400 truncate">{info.email}</p>
+              </a>
+            )}
+
+            {info.phone && (
+              <a 
+                href={`tel:${info.phone}`}
+                className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 space-y-2 transition block group"
+              >
+                <Phone className="w-5 h-5 text-purple-400 group-hover:scale-110 transition-transform" />
+                <h4 className="font-bold text-white text-xs">Phone / WhatsApp</h4>
+                <p className="text-[11px] text-slate-400 truncate">{info.phone}</p>
+              </a>
+            )}
+
+            <button
+              onClick={handleDownloadPDF}
+              className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 space-y-2 transition text-left group block w-full"
+            >
+              <Download className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" />
+              <h4 className="font-bold text-white text-xs">Download Full Resume</h4>
+              <p className="text-[11px] text-slate-400">High-resolution PDF document</p>
+            </button>
           </div>
 
           <form onSubmit={handleContactSubmit} className={`p-8 rounded-3xl ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'} border text-left space-y-4 shadow-xl`}>
             {contactStatus.success && (
               <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold rounded-xl flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" /> Thank you! Your message has been sent successfully.
+                <CheckCircle className="w-4 h-4" /> Thank you! Your message has been sent successfully to the portfolio owner.
               </div>
             )}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
