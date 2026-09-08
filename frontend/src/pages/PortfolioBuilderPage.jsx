@@ -24,6 +24,8 @@ export default function PortfolioBuilderPage() {
 
   const [username, setUsername] = useState('alexjohnson');
   const [themeId, setThemeId] = useState('developer');
+  const [accentColor, setAccentColor] = useState('blue');
+  const [availabilityStatus, setAvailabilityStatus] = useState('🟢 Available for Full-Time & Freelance Projects');
   const [isPublished, setIsPublished] = useState(true);
 
   const publicUrl = `${window.location.origin}/portfolio/${username}`;
@@ -315,6 +317,17 @@ export default function PortfolioBuilderPage() {
                 </div>
               </div>
 
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Availability Badge Status</label>
+                <input
+                  type="text"
+                  value={availabilityStatus}
+                  onChange={e => setAvailabilityStatus(e.target.value)}
+                  placeholder="e.g. 🟢 Available for Hire"
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-slate-200 focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
               <div className="flex items-center justify-between p-4 rounded-xl bg-slate-900 border border-slate-800">
                 <div>
                   <p className="font-bold text-white text-xs">Public Website Status</p>
@@ -326,6 +339,30 @@ export default function PortfolioBuilderPage() {
                   onChange={e => setIsPublished(e.target.checked)}
                   className="w-5 h-5 rounded bg-slate-800 border-slate-700 text-emerald-500 focus:ring-emerald-500"
                 />
+              </div>
+            </div>
+
+            {/* Accent Color Picker */}
+            <div className="space-y-3 pt-4 border-t border-slate-800">
+              <h2 className="text-sm font-bold text-white">Accent Theme Color</h2>
+              <div className="flex items-center gap-3">
+                {[
+                  { id: 'blue', color: 'bg-blue-600' },
+                  { id: 'emerald', color: 'bg-emerald-600' },
+                  { id: 'purple', color: 'bg-purple-600' },
+                  { id: 'amber', color: 'bg-amber-500' },
+                  { id: 'rose', color: 'bg-rose-600' }
+                ].map(c => (
+                  <button
+                    key={c.id}
+                    onClick={() => setAccentColor(c.id)}
+                    className={`w-7 h-7 rounded-full ${c.color} transition transform hover:scale-110 flex items-center justify-center ${
+                      accentColor === c.id ? 'ring-2 ring-white ring-offset-2 ring-offset-slate-950' : 'opacity-80'
+                    }`}
+                  >
+                    {accentColor === c.id && <Check className="w-3.5 h-3.5 text-white" />}
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -357,7 +394,13 @@ export default function PortfolioBuilderPage() {
           {/* Right Portfolio Live Preview (8 Cols) */}
           <div className="lg:col-span-8 bg-slate-950 overflow-y-auto max-h-[calc(100vh-65px)] p-6 flex justify-center items-start">
             <div className="w-full max-w-4xl rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-900">
-              <PortfolioThemeRenderer themeId={themeId} data={activeResume} username={username} />
+              <PortfolioThemeRenderer 
+                themeId={themeId} 
+                data={activeResume} 
+                username={username}
+                accentColor={accentColor}
+                availabilityStatus={availabilityStatus}
+              />
             </div>
           </div>
         </div>
