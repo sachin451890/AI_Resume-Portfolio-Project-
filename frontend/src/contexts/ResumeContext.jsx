@@ -120,6 +120,10 @@ export function ResumeProvider({ children }) {
   }, [versions, saveResume, addToast]);
 
   const duplicateResume = useCallback((resumeId) => {
+    if (resumes.length >= 1) {
+      addToast('Free Plan limit reached (1 Free Resume). Upgrade to Pro for unlimited resumes & portfolio hosting!', 'info');
+      return null;
+    }
     const target = resumes.find(r => r.id === resumeId) || activeResume;
     const copy = {
       ...JSON.parse(JSON.stringify(target)),
@@ -144,6 +148,10 @@ export function ResumeProvider({ children }) {
   }, [addToast]);
 
   const createNewResume = useCallback((title = 'Untitled Resume') => {
+    if (resumes.length >= 1) {
+      addToast('Free Plan limit reached (1 Free Resume). Upgrade to Pro for unlimited resumes & portfolio hosting!', 'info');
+      return null;
+    }
     const newRes = {
       ...JSON.parse(JSON.stringify(sampleResume)),
       id: `res_${Date.now()}`,
@@ -162,7 +170,7 @@ export function ResumeProvider({ children }) {
     setWizardStep(1);
     addToast('New resume created', 'success');
     return newRes;
-  }, [saveResume, addToast]);
+  }, [resumes, saveResume, addToast]);
 
   return (
     <ResumeContext.Provider value={{

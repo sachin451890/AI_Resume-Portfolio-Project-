@@ -209,75 +209,49 @@ export default function PortfolioBuilderPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {/* Free Starter (Locked) Card */}
-              <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 space-y-6 flex flex-col justify-between">
+            <div className="max-w-xl mx-auto">
+              {/* Pro Portfolio Plan Exclusive Card */}
+              <div className="p-8 md:p-10 rounded-3xl bg-gradient-to-b from-slate-900 via-slate-900 to-indigo-950/80 border-2 border-blue-500 space-y-6 shadow-2xl relative">
+                <div className="absolute -top-3.5 right-8 px-3.5 py-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-extrabold uppercase tracking-wider shadow-lg">
+                  Pro Exclusive Feature
+                </div>
+
                 <div className="space-y-4">
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Free Starter</span>
-                  <div className="text-3xl font-extrabold text-white">
-                    ₹0 <span className="text-xs text-slate-500 font-normal">/ forever</span>
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-yellow-400" />
+                    <span className="text-sm font-bold text-blue-400 uppercase tracking-wider">Pro Portfolio Subscription</span>
                   </div>
-                  <p className="text-xs text-slate-400">Basic resume builder without hosted portfolio website</p>
 
-                  <ul className="space-y-2.5 text-xs text-slate-400">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Standard PDF exports
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Basic resume templates
-                    </li>
-                    <li className="flex items-center gap-2 text-slate-500 line-through">
-                      <Lock className="w-3.5 h-3.5 text-slate-600" /> Personal hosted website URL
-                    </li>
-                    <li className="flex items-center gap-2 text-slate-500 line-through">
-                      <Lock className="w-3.5 h-3.5 text-slate-600" /> Interactive theme switcher
-                    </li>
-                  </ul>
-                </div>
-
-                <button
-                  disabled
-                  className="w-full py-3 rounded-xl bg-slate-800 text-slate-500 text-xs font-bold cursor-not-allowed"
-                >
-                  Current Free Tier
-                </button>
-              </div>
-
-              {/* Pro Portfolio Plan (Active / Highlighted) Card */}
-              <div className="p-8 rounded-3xl bg-gradient-to-b from-slate-900 via-slate-900 to-indigo-950/60 border-2 border-blue-500 space-y-6 flex flex-col justify-between shadow-2xl relative">
-                <div className="absolute -top-3 right-6 px-3 py-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-extrabold uppercase tracking-wider shadow">
-                  Recommended for Professionals
-                </div>
-
-                <div className="space-y-4">
-                  <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">Pro Portfolio Plan</span>
-                  <div className="text-3xl font-extrabold text-white">
+                  <div className="text-4xl font-extrabold text-white">
                     {selectedPlan === 'yearly' ? '₹6,999' : '₹799'} <span className="text-xs text-slate-400 font-normal">/ {selectedPlan === 'yearly' ? 'year' : 'month'} ($9/mo)</span>
                   </div>
-                  <p className="text-xs text-slate-300">Unlimited website hosting, themes & custom public links</p>
 
-                  <ul className="space-y-2.5 text-xs text-slate-200">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" /> <strong>Hosted Website Link</strong> (`/portfolio/:handle`)
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Portfolio Website Builder is strictly a Pro Subscription feature. Unlock personal hosted website URL, themes & 1-click resume synchronization.
+                  </p>
+
+                  <ul className="space-y-3 text-xs text-slate-200 pt-2 border-t border-slate-800">
+                    <li className="flex items-center gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" /> <strong>Hosted Website Link</strong> (`/portfolio/:handle`)
                     </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" /> <strong>4 Premium Themes</strong> (Developer, Minimal, Exec)
+                    <li className="flex items-center gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" /> <strong>4 Interactive Themes</strong> (Developer, Minimal, Exec, Creative)
                     </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Real-time auto sync with resume entries
+                    <li className="flex items-center gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" /> <strong>Real-time Resume Auto-Sync</strong>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Unlimited PDF & DOCX Exports
+                    <li className="flex items-center gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" /> <strong>Unlimited Resumes, PDF & DOCX Exports</strong>
                     </li>
                   </ul>
                 </div>
 
                 <button
                   onClick={handleOpenPaymentModal}
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-extrabold shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2 transition"
+                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-sm font-extrabold shadow-xl shadow-blue-500/25 flex items-center justify-center gap-2.5 transition transform hover:-translate-y-0.5"
                 >
                   <CreditCard className="w-4 h-4" />
-                  <span>Subscribe & Unlock Portfolio</span>
+                  <span>Subscribe Now to Unlock Portfolio</span>
                 </button>
               </div>
             </div>

@@ -27,6 +27,16 @@ export default function DashboardPage() {
 
   const [billingInfo, setBillingInfo] = useState({ subscription: null, transactions: [] });
 
+  const handleCreateNewResume = () => {
+    if (resumes.length >= 1 && (!billingInfo.subscription || !billingInfo.subscription.plan?.includes('pro'))) {
+      addToast('Free Tier includes 1 free resume document. Upgrade to Pro Plan for unlimited resumes & portfolio hosting!', 'info');
+      navigate('/#pricing');
+      return;
+    }
+    const created = createNewResume();
+    if (created) navigate('/builder');
+  };
+
   React.useEffect(() => {
     if (user && getToken) {
       getToken().then(token => {
@@ -94,10 +104,7 @@ export default function DashboardPage() {
               <FileText className="w-4 h-4" /> My Resumes
             </button>
             <button
-              onClick={() => {
-                createNewResume();
-                navigate('/builder');
-              }}
+              onClick={handleCreateNewResume}
               className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-blue-400 hover:text-blue-300 hover:bg-blue-950/40 transition"
             >
               <PlusCircle className="w-4 h-4" /> Create Resume
@@ -153,10 +160,7 @@ export default function DashboardPage() {
             <p className="text-xs sm:text-sm text-slate-400 mt-1">Manage your resumes, preview templates, and update your personal portfolio</p>
           </div>
           <button
-            onClick={() => {
-              createNewResume();
-              navigate('/builder');
-            }}
+            onClick={handleCreateNewResume}
             className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-lg shadow-blue-500/25 flex items-center gap-2 transition"
           >
             <PlusCircle className="w-4 h-4" /> Create New Resume
@@ -200,10 +204,7 @@ export default function DashboardPage() {
               <h2 className="text-lg font-bold text-white">Quick Actions</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <button
-                  onClick={() => {
-                    createNewResume();
-                    navigate('/builder');
-                  }}
+                  onClick={handleCreateNewResume}
                   className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 text-left space-y-2 transition group"
                 >
                   <PlusCircle className="w-6 h-6 text-blue-400 group-hover:scale-110 transition-transform" />
