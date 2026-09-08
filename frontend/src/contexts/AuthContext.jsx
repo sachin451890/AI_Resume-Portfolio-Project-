@@ -89,21 +89,24 @@ export function AuthProvider({ children }) {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/builder`
+          redirectTo: `${window.location.origin}/builder`,
+          queryParams: {
+            prompt: 'select_account',
+            access_type: 'offline'
+          }
         }
       });
       if (error) throw error;
       return data;
     } else {
       // Local dev mode fallback for Google Sign-In with Gmail
-      const promptEmail = window.prompt("Enter your Gmail address to log in with Google:", "user@gmail.com");
-      const userEmail = (promptEmail && promptEmail.trim()) ? promptEmail.trim() : "user@gmail.com";
-      const userName = userEmail.split('@')[0] || 'Google User';
+      const userEmail = "user@gmail.com";
+      const userName = "User";
       const mockUser = {
         id: `google_user_${Date.now()}`,
         email: userEmail,
         user_metadata: {
-          full_name: userName.charAt(0).toUpperCase() + userName.slice(1),
+          full_name: userName,
           avatar_url: `https://api.dicebear.com/7.x/avataaars/svg?seed=${userName}`
         }
       };
@@ -111,6 +114,22 @@ export function AuthProvider({ children }) {
       localStorage.setItem('ai_resume_user', JSON.stringify(mockUser));
       return { user: mockUser };
     }
+  };
+
+  const loginWithSelectedGoogleAccount = async (account) => {
+    const userEmail = account.email || 'user@gmail.com';
+    const userName = account.name || userEmail.split('@')[0];
+    const mockUser = {
+      id: `google_user_${Date.now()}`,
+      email: userEmail,
+      user_metadata: {
+        full_name: userName,
+        avatar_url: `https://api.dicebear.com/7.x/avataaars/svg?seed=${account.avatarSeed || userName}`
+      }
+    };
+    setUser(mockUser);
+    localStorage.setItem('ai_resume_user', JSON.stringify(mockUser));
+    return { user: mockUser };
   };
 
   const logout = async () => {
@@ -131,7 +150,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, login, register, loginWithGoogle, logout, resetPassword, getToken }}>
+    <AuthContext.Provider value={{ user, session, loading, login, register, loginWithGoogle, loginWithSelectedGoogleAccount, logout, resetPassword, getToken }}>
       {children}
     </AuthContext.Provider>
   );

@@ -4,6 +4,9 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useResume } from '../../contexts/ResumeContext';
 import { useToast } from '../../contexts/ToastContext';
 
+import GoogleAccountPickerModal from './GoogleAccountPickerModal';
+import { isSupabaseConfigured } from '../../services/supabase';
+
 export default function AuthRequiredModal({ isOpen, onClose, onSuccess }) {
   if (!isOpen) return null;
 
@@ -14,17 +17,33 @@ export default function AuthRequiredModal({ isOpen, onClose, onSuccess }) {
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [googlePickerOpen, setGooglePickerOpen] = useState(false);
 
-  const { login, register, loginWithGoogle } = useAuth();
+  const { login, register, loginWithGoogle, loginWithSelectedGoogleAccount } = useAuth();
   const { transferGuestDraftToUser } = useResume();
   const { addToast } = useToast();
 
   const handleGoogleLogin = async () => {
+    if (isSupabaseConfigured) {
+      setLoading(true);
+      setError('');
+      try {
+        await loginWithGoogle();
+      } catch (err) {
+        setError(err.message || 'Google Sign-In failed.');
+        setLoading(false);
+      }
+    } else {
+      setGooglePickerOpen(true);
+    }
+  };
+
+  const handleSelectAccount = async (account) => {
     setLoading(true);
     setError('');
     try {
-      const data = await loginWithGoogle();
-      addToast('Authenticated with Google!', 'success');
+      const data = await loginWithSelectedGoogleAccount(account);
+      addToast(`Signed in as ${account.email}!`, 'success');
       if (data?.user) transferGuestDraftToUser(data.user);
       onClose();
       if (onSuccess) onSuccess();
@@ -245,6 +264,13 @@ export default function AuthRequiredModal({ isOpen, onClose, onSuccess }) {
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Your resume draft is saved locally
           </div>
         </div>
+
+        {/* Interactive Google Gmail Account Picker Modal */}
+        <GoogleAccountPickerModal
+          isOpen={googlePickerOpen}
+          onClose={() => setGooglePickerOpen(false)}
+          onSelectAccount={handleSelectAccount}
+        />
       </div>
     </div>
   );

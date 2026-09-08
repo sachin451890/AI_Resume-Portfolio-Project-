@@ -4,21 +4,41 @@ import { Sparkles, Mail, Lock, AlertCircle, ArrowRight } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 
+import GoogleAccountPickerModal from '../components/auth/GoogleAccountPickerModal';
+import { isSupabaseConfigured } from '../services/supabase';
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login, loginWithGoogle } = useAuth();
+  const [googlePickerOpen, setGooglePickerOpen] = useState(false);
+
+  const { login, loginWithGoogle, loginWithSelectedGoogleAccount } = useAuth();
   const { addToast } = useToast();
   const navigate = useNavigate();
 
   const handleGoogleLogin = async () => {
+    if (isSupabaseConfigured) {
+      setLoading(true);
+      setError('');
+      try {
+        await loginWithGoogle();
+      } catch (err) {
+        setError(err.message || 'Google Sign-In failed.');
+        setLoading(false);
+      }
+    } else {
+      setGooglePickerOpen(true);
+    }
+  };
+
+  const handleSelectAccount = async (account) => {
     setLoading(true);
     setError('');
     try {
-      await loginWithGoogle();
-      addToast('Authenticated with Google!', 'success');
+      await loginWithSelectedGoogleAccount(account);
+      addToast(`Signed in as ${account.email}!`, 'success');
       navigate('/builder');
     } catch (err) {
       setError(err.message || 'Google Sign-In failed.');
@@ -133,6 +153,13 @@ export default function LoginPage() {
           <Link to="/register" className="text-blue-400 font-semibold hover:underline">Create an account</Link>
         </p>
       </div>
+
+      {/* Interactive Google Gmail Account Chooser Modal */}
+      <GoogleAccountPickerModal
+        isOpen={googlePickerOpen}
+        onClose={() => setGooglePickerOpen(false)}
+        onSelectAccount={handleSelectAccount}
+      />
     </div>
   );
 }
