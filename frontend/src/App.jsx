@@ -32,7 +32,7 @@ export default function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-            <Route path="/builder" element={<ProtectedRoute><ResumeWizardPage /></ProtectedRoute>} />
+            <Route path="/builder" element={<ResumeWizardPage />} />
             <Route path="/portfolio-builder" element={<ProtectedRoute><PortfolioBuilderPage /></ProtectedRoute>} />
             <Route path="/portfolio/:username" element={<PublicPortfolioPage />} />
             <Route path="/profile" element={<ProtectedRoute><ProfileSettingsPage /></ProtectedRoute>} />
