@@ -58,6 +58,24 @@ export default function PortfolioBuilderPage() {
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
         {/* Left Settings Sidebar (4 Cols) */}
         <div className="lg:col-span-4 p-6 overflow-y-auto max-h-[calc(100vh-65px)] border-r border-slate-800 space-y-6">
+          {/* Pro Feature Subscription Card */}
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-900/60 to-indigo-900/60 border border-blue-500/40 space-y-2.5">
+            <div className="flex items-center gap-2 text-xs font-bold text-blue-300">
+              <Sparkles className="w-4 h-4 text-blue-400" />
+              <span>Pro Plan Feature</span>
+            </div>
+            <p className="text-[11px] text-slate-300 leading-relaxed">
+              Personal hosted website portfolio creation requires an active Pro Plan subscription.
+            </p>
+            <a
+              href="/#pricing"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition"
+            >
+              <span>View Subscription Plans</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+
           <div className="space-y-4">
             <h2 className="text-lg font-bold text-white">Portfolio Settings</h2>
 

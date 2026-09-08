@@ -34,6 +34,9 @@ export default function Navbar() {
           <a href="/#features" className="hover:text-blue-400 transition-colors">Features</a>
           <a href="/#templates" className="hover:text-blue-400 transition-colors">Templates</a>
           <a href="/#how-it-works" className="hover:text-blue-400 transition-colors">How It Works</a>
+          <a href="/#pricing" className="hover:text-emerald-400 font-semibold transition-colors flex items-center gap-1">
+            <Globe className="w-3.5 h-3.5 text-emerald-400" /> My Portfolio
+          </a>
           <a href="/#pricing" className="hover:text-blue-400 transition-colors">Pricing</a>
         </div>
 
