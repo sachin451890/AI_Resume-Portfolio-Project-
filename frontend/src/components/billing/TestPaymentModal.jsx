@@ -47,7 +47,7 @@ export default function TestPaymentModal({ isOpen, onClose, orderData, onSimulat
           <div>
             <span className="text-slate-400 block text-[11px]">Subtotal Order Amount</span>
             <span className="font-extrabold text-lg text-white">
-              {orderData.symbol || '₹'}{orderData.displayAmount || '799'}
+              {orderData.symbol || '₹'}{orderData.displayAmount || '99'}
             </span>
           </div>
           <span className="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono text-[11px]">

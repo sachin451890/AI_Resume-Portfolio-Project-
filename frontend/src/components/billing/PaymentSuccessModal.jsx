@@ -8,7 +8,7 @@ export default function PaymentSuccessModal({ isOpen, onClose, details }) {
 
   const planName = details?.plan === 'pro_yearly' ? 'Pro Yearly Plan' : 'Pro Monthly Plan';
   const currencySymbol = details?.currency === 'INR' ? '₹' : details?.currency === 'EUR' ? '€' : details?.currency === 'GBP' ? '£' : '$';
-  const amountFormatted = `${currencySymbol}${details?.amount || '799'}`;
+  const amountFormatted = `${currencySymbol}${details?.amount || '99'}`;
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">

@@ -57,7 +57,7 @@ export default function PortfolioBuilderPage() {
 
   const mockOrderData = {
     id: `order_portfolio_${Date.now()}`,
-    displayAmount: selectedPlan === 'yearly' ? '6,999' : '799',
+    displayAmount: selectedPlan === 'yearly' ? '999' : '99',
     currency: 'INR',
     symbol: '₹',
     keyId: 'rzp_test_portfolio_mock'
@@ -174,7 +174,7 @@ export default function PortfolioBuilderPage() {
                 className="w-full sm:w-auto px-10 py-4.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-blue-500/25 flex items-center justify-center gap-3 transition transform hover:-translate-y-0.5"
               >
                 <Zap className="w-5 h-5 text-yellow-300 fill-current" />
-                <span>Subscribe Now to Unlock Portfolio (₹799 / $9)</span>
+                <span>Subscribe Now to Unlock Portfolio (₹99 / $9)</span>
               </button>
             </div>
             <p className="text-[11px] text-slate-500 flex items-center justify-center gap-1.5">
@@ -204,7 +204,7 @@ export default function PortfolioBuilderPage() {
                     selectedPlan === 'yearly' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
-                  Yearly Plan <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded">Save 25%</span>
+                  Yearly Plan <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded">Save 16%</span>
                 </button>
               </div>
             </div>
@@ -223,7 +223,7 @@ export default function PortfolioBuilderPage() {
                   </div>
 
                   <div className="text-4xl font-extrabold text-white">
-                    {selectedPlan === 'yearly' ? '₹6,999' : '₹799'} <span className="text-xs text-slate-400 font-normal">/ {selectedPlan === 'yearly' ? 'year' : 'month'} ($9/mo)</span>
+                    {selectedPlan === 'yearly' ? '₹999' : '₹99'} <span className="text-xs text-slate-400 font-normal">/ {selectedPlan === 'yearly' ? 'year' : 'month'} ($9/mo)</span>
                   </div>
 
                   <p className="text-xs text-slate-300 leading-relaxed">

@@ -9,8 +9,8 @@ export const REGIONS = {
     flag: '🇮🇳',
     paymentMethods: ['UPI', 'Debit/Credit Cards', 'Net Banking', 'Wallets'],
     plans: {
-      pro_monthly: { amount: 799, period: 'month', label: '₹799 / month' },
-      pro_yearly: { amount: 7999, period: 'year', label: '₹7,999 / year' }
+      pro_monthly: { amount: 99, period: 'month', label: '₹99 / month' },
+      pro_yearly: { amount: 999, period: 'year', label: '₹999 / year' }
     }
   },
   US: {
@@ -21,8 +21,8 @@ export const REGIONS = {
     flag: '🇺🇸',
     paymentMethods: ['Credit/Debit Cards', 'International Gateways'],
     plans: {
-      pro_monthly: { amount: 9.99, period: 'month', label: '$9.99 / month' },
-      pro_yearly: { amount: 99.99, period: 'year', label: '$99.99 / year' }
+      pro_monthly: { amount: 9, period: 'month', label: '$9 / month' },
+      pro_yearly: { amount: 79, period: 'year', label: '$79 / year' }
     }
   },
   EU: {
@@ -33,8 +33,8 @@ export const REGIONS = {
     flag: '🇪🇺',
     paymentMethods: ['Cards', 'SEPA/International'],
     plans: {
-      pro_monthly: { amount: 9.99, period: 'month', label: '€9.99 / month' },
-      pro_yearly: { amount: 99.99, period: 'year', label: '€99.99 / year' }
+      pro_monthly: { amount: 9, period: 'month', label: '€9 / month' },
+      pro_yearly: { amount: 79, period: 'year', label: '€79 / year' }
     }
   },
   GB: {
@@ -45,8 +45,8 @@ export const REGIONS = {
     flag: '🇬🇧',
     paymentMethods: ['Cards', 'International'],
     plans: {
-      pro_monthly: { amount: 7.99, period: 'month', label: '£7.99 / month' },
-      pro_yearly: { amount: 79.99, period: 'year', label: '£79.99 / year' }
+      pro_monthly: { amount: 7, period: 'month', label: '£7 / month' },
+      pro_yearly: { amount: 69, period: 'year', label: '£69 / year' }
     }
   }
 };
