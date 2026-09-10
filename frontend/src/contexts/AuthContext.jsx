@@ -38,6 +38,9 @@ export function AuthProvider({ children }) {
   }, []);
 
   const getToken = async () => {
+    const jwtToken = localStorage.getItem('ai_jwt_token');
+    if (jwtToken) return jwtToken;
+
     if (isSupabaseConfigured && supabase) {
       const { data: { session } } = await supabase.auth.getSession();
       return session?.access_token || 'demo-token';
@@ -47,6 +50,21 @@ export function AuthProvider({ children }) {
   };
 
   const login = async (email, password) => {
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (res.ok && data.token) {
+        localStorage.setItem('ai_jwt_token', data.token);
+        localStorage.setItem('ai_resume_user', JSON.stringify(data.user));
+        setUser(data.user);
+        return data;
+      }
+    } catch (e) {}
+
     if (isSupabaseConfigured && supabase) {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
@@ -64,6 +82,21 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (email, password, fullName) => {
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, fullName })
+      });
+      const data = await res.json();
+      if (res.ok && data.token) {
+        localStorage.setItem('ai_jwt_token', data.token);
+        localStorage.setItem('ai_resume_user', JSON.stringify(data.user));
+        setUser(data.user);
+        return data;
+      }
+    } catch (e) {}
+
     if (isSupabaseConfigured && supabase) {
       const { data, error } = await supabase.auth.signUp({
         email,

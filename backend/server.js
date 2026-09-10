@@ -8,6 +8,7 @@ const resumesRoutes = require('./src/routes/resumes');
 const portfoliosRoutes = require('./src/routes/portfolios');
 const pdfRoutes = require('./src/routes/pdf');
 const paymentsRoutes = require('./src/routes/payments');
+const authRoutes = require('./src/routes/auth');
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use('/api/resumes', resumesRoutes);
 app.use('/api/portfolios', portfoliosRoutes);
 app.use('/api/pdf', pdfRoutes);
 app.use('/api/payments', paymentsRoutes);
+app.use('/api/auth', authRoutes);
 
 // Centralized Error Handling Middleware
 app.use((err, req, res, next) => {
