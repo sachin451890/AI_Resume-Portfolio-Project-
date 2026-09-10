@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, FileText, PlusCircle, Layers, Globe, User, Settings, LogOut, 
-  Sparkles, Download, Edit3, Trash2, Copy, CheckCircle, Clock, ExternalLink, ShieldCheck, CreditCard
+  Sparkles, Download, Edit3, Trash2, Copy, CheckCircle, Clock, ExternalLink, ShieldCheck, CreditCard, Home
 } from 'lucide-react';
 import { useResume } from '../contexts/ResumeContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -87,6 +87,12 @@ export default function DashboardPage() {
 
           {/* Navigation Items */}
           <nav className="space-y-1 text-sm font-medium">
+            <Link
+              to="/"
+              className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition font-semibold"
+            >
+              <Home className="w-4 h-4 text-blue-400" /> Return to Home Page
+            </Link>
             <button
               onClick={() => setActiveTab('dashboard')}
               className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition ${
@@ -159,12 +165,21 @@ export default function DashboardPage() {
             </h1>
             <p className="text-xs sm:text-sm text-slate-400 mt-1">Manage your resumes, preview templates, and update your personal portfolio</p>
           </div>
-          <button
-            onClick={handleCreateNewResume}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-lg shadow-blue-500/25 flex items-center gap-2 transition"
-          >
-            <PlusCircle className="w-4 h-4" /> Create New Resume
-          </button>
+          <div className="flex items-center gap-3">
+            <Link
+              to="/"
+              className="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-200 font-semibold text-xs flex items-center gap-2 transition"
+            >
+              <Home className="w-4 h-4 text-blue-400" />
+              <span>Return to Home</span>
+            </Link>
+            <button
+              onClick={handleCreateNewResume}
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-lg shadow-blue-500/25 flex items-center gap-2 transition"
+            >
+              <PlusCircle className="w-4 h-4" /> Create New Resume
+            </button>
+          </div>
         </div>
 
         {/* Dashboard Overview Tab */}
