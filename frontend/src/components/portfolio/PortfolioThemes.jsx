@@ -8,6 +8,7 @@ import { api } from '../../services/api';
 import { exportResumeToPDF } from '../../utils/pdfExporter';
 
 export const PORTFOLIO_THEMES = [
+  { id: 'quantum-motion', name: 'AI Motion 3D (Animated)', description: 'Cyberpunk animated layout with glowing particle cards & smooth motion' },
   { id: 'developer', name: 'Developer Dark', description: 'Tech-focused dark mode with code highlight badges' },
   { id: 'modern', name: 'Modern SaaS', description: 'Sleek dark gradient with glowing blue glassmorphism cards' },
   { id: 'minimal', name: 'Minimalist White', description: 'Clean, elegant high contrast typography layout' },
