@@ -177,6 +177,15 @@ class AIService {
       return `Dear Hiring Manager at ${companyName},\n\nI am writing to express my strong interest in the ${jobTitle} position. With my background in software engineering and hands-on experience developing web solutions, I am confident in my ability to contribute effectively to your team.\n\nThank you for your time and consideration.\n\nSincerely,\n${resumeData.personalInfo?.fullName || 'Candidate'}`;
     }
   }
+
+  async generateContent(promptText, isJsonMode = false) {
+    try {
+      return await callGemini(promptText, isJsonMode);
+    } catch (err) {
+      console.warn('[AI Service] Gemini call failed for custom prompt:', err.message);
+      throw err;
+    }
+  }
 }
 
 module.exports = new AIService();
