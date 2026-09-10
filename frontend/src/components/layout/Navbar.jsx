@@ -37,6 +37,9 @@ export default function Navbar() {
           <Link to="/portfolio-builder" className="hover:text-emerald-400 font-semibold transition-colors flex items-center gap-1">
             <Globe className="w-3.5 h-3.5 text-emerald-400" /> My Portfolio
           </Link>
+          <Link to="/interview" className="hover:text-purple-400 font-semibold transition-colors flex items-center gap-1">
+            <Sparkles className="w-3.5 h-3.5 text-purple-400" /> AI Interview
+          </Link>
           <a href="/#pricing" className="hover:text-blue-400 transition-colors">Pricing</a>
         </div>
 

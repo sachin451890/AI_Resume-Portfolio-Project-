@@ -13,6 +13,7 @@ import ResumeWizardPage from './pages/ResumeWizardPage';
 import PortfolioBuilderPage from './pages/PortfolioBuilderPage';
 import PublicPortfolioPage from './pages/PublicPortfolioPage';
 import ProfileSettingsPage from './pages/ProfileSettingsPage';
+import MockInterviewPage from './pages/MockInterviewPage';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/builder" element={<ResumeWizardPage />} />
             <Route path="/portfolio-builder" element={<ProtectedRoute><PortfolioBuilderPage /></ProtectedRoute>} />
             <Route path="/portfolio/:username" element={<PublicPortfolioPage />} />
+            <Route path="/interview" element={<MockInterviewPage />} />
             <Route path="/profile" element={<ProtectedRoute><ProfileSettingsPage /></ProtectedRoute>} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
