@@ -14,6 +14,7 @@ import { calculateJobMatch } from '../utils/jobMatcher';
 import { exportResumeToPDF } from '../utils/pdfExporter';
 import AuthRequiredModal from '../components/auth/AuthRequiredModal';
 import ExportFormatModal from '../components/export/ExportFormatModal';
+import ResumeFileUploader from '../components/common/ResumeFileUploader';
 
 export default function ResumeWizardPage() {
   const { activeResume, updateActiveResume, saveResume, isSaving, wizardStep, setWizardStep, createVersion } = useResume();
@@ -241,9 +242,26 @@ export default function ResumeWizardPage() {
           {/* STEP 1: Personal Info */}
           {wizardStep === 1 && (
             <div className="space-y-6">
-              <div className="border-b border-slate-800 pb-3">
-                <h2 className="text-xl font-extrabold text-white">Personal Information</h2>
-                <p className="text-xs text-slate-400 mt-0.5">Enter your primary contact details and online profile links</p>
+              <div className="border-b border-slate-800 pb-3 space-y-3">
+                <div>
+                  <h2 className="text-xl font-extrabold text-white">Personal Information</h2>
+                  <p className="text-xs text-slate-400 mt-0.5">Enter your primary contact details or upload an existing resume file to auto-fill with AI</p>
+                </div>
+
+                {/* Upload Existing Resume File Box */}
+                <div className="pt-2">
+                  <ResumeFileUploader
+                    onResumeParsed={(parsedData) => {
+                      if (parsedData.name) handlePersonalInfoChange('fullName', parsedData.name);
+                      if (parsedData.title) handlePersonalInfoChange('professionalTitle', parsedData.title);
+                      if (parsedData.contactEmail) handlePersonalInfoChange('email', parsedData.contactEmail);
+                      if (parsedData.bio) updateActiveResume('summary', parsedData.bio);
+                      if (parsedData.skills) updateActiveResume('skills', parsedData.skills.map(s => ({ name: typeof s === 'string' ? s : s.name, level: 'Advanced' })));
+                      addToast('🎉 Resume auto-filled with uploaded file data!', 'success');
+                    }}
+                    buttonText="Upload Existing Resume to Auto-Fill Wizard (PDF / DOCX / TXT / JSON)"
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
